@@ -1,9 +1,9 @@
 # Language Identification Project
 
-### problem:
+### Problem:
  what is the language of this sentence?
 
-### solution
+### Solution
  There are alot of ways to takkle this problem using various machine learning techniques,
  including Linear Regression, Support Vector Machines, Deep Neural Networks (LSTMs or GRUs), and transformers.
  So for the purpose of learning i tried them all and here is the results in the follwing table.
