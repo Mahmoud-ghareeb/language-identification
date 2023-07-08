@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>language identifier</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>language identifier</h1>
+        <div class="row mt-4">
+            <div class="col-md-2"></div> <!-- Add md-2 spacing -->
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="textInput">Enter text:</label>
+                    <input type="text" class="form-control" name="text" id="textInput" placeholder="Enter text">
+                </div>
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="sendText()">Detect Language</button>
+            </div>
+          </div>
+          <div>{{text}}</div>
+          <div class="row mt-4">
+            <div class="col-md-2"></div> <!-- Add md-2 spacing -->
+            <div class="col-md-8">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Language</th>
+                    <th>Percentage</th>
+                  </tr>
+                </thead>
+                <tbody id="outputTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <script>
+            function sendText() {
+              const text = document.getElementById("textInput").value;
+          
+              // Send the text to the backend endpoint
+              fetch('/get_model_output', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: text })
+              })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data)
+                // Update the output table with the received result
+                const tableBody = document.getElementById("outputTable");
+                tableBody.innerHTML = data.results;
+          
+                // for (const result of data.results) {
+                //   const language = result.language;
+                //   const percentage = result.percentage;
+          
+                //   const row = document.createElement("tr");
+                //   const languageCell = document.createElement("td");
+                //   const percentageCell = document.createElement("td");
+          
+                //   languageCell.innerText = language;
+                //   percentageCell.innerText = percentage;
+          
+                //   row.appendChild(languageCell);
+                //   row.appendChild(percentageCell);
+                //   tableBody.appendChild(row);
+                // }
+              })
+              .catch(error => {
+                console.error('Error:', error);
+              });
+            }
+          </script>
+{% endblock %}
+
